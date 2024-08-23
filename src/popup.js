@@ -1,19 +1,19 @@
 // Fetches and displays insights about properties from the collected data.
-// alert(1);  
 
 document.addEventListener('DOMContentLoaded', function () {
     chrome.storage.local.get('propertyDetails', function (result) {
         let insightsDiv = document.getElementById('insights');
         let propertyDetails = result.propertyDetails;
-        if (propertyDetails.address) {
-            let imageElements = (propertyDetails.imagesrc || []).map((src, index) => {
-                if (src) { // Check if src is not null or undefined  
-                    return `<img src="${src}" alt="Image ${index + 1}"${index === 0 ? ' class="active"' : ''}>`;
-                }
-                return ''; // Return an empty string for null or invalid sources  
-            }).join('');
-            // show elements
-            insightsDiv.innerHTML = `
+        try {
+            if (propertyDetails.address) {
+                let imageElements = (propertyDetails.imagesrc || []).map((src, index) => {
+                    if (src) { // Check if src is not null or undefined
+                        return `<img src="${src}" alt="Image ${index + 1}"${index === 0 ? ' class="active"' : ''}>`;
+                    }
+                    return ''; // Return an empty string for null or invalid sources
+                }).join('');
+                // show elements
+                insightsDiv.innerHTML = `
                 <h3>${propertyDetails.address}</h3>
                 <table class="property-table">
                     <thead>
@@ -78,58 +78,55 @@ document.addEventListener('DOMContentLoaded', function () {
                     </button>
                 </div>
                 <div width="100%" id="screenshot"></div>
-                <table class="history-table">
-                    <thead>
-                        <tr>
-                        <th>Date</th>
-                        <th>Event</th>
-                        <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>${propertyDetails.h_date[0]}
-                            <td>${propertyDetails.h_event[0]}
-                            <td>${propertyDetails.h_price[0]}
-                        </tr>
-                        <tr>
-                            <td>${propertyDetails.h_date[1]}
-                            <td>${propertyDetails.h_event[1]}
-                            <td>${propertyDetails.h_price[1]}
-                        </tr>
-                        <tr>
-                            <td>${propertyDetails.h_date[2]}
-                            <td>${propertyDetails.h_event[2]}
-                            <td>${propertyDetails.h_price[2]}
-                        </tr>
-                    </tbody>
-                </table>
             `;
+                let tableBody = `<table class="history-table" id="historyprice">
+                    <thead>
+                    <tr>
+                    <th>Date</th>
+                    <th>Event</th>
+                    <th>Price</th>
+                    </tr>
+                </thead>
+                <tbody>`
+                for (let i = 0; i < propertyDetails.h_date.length; i++) {
+                    const row = `
+                    <tr>
+                        <td>${propertyDetails.h_date[i]}</td>  
+                        <td>${propertyDetails.h_event[i]}</td>  
+                        <td>${propertyDetails.h_price[i]}</td>  
+                    </tr>  
+                `;
+                    tableBody += row;
+                }
+                tableBody  += `</tbody></table>`
+                insightsDiv.innerHTML += tableBody;
 
-            // Initialize the carousel controls after the HTML content has been generated.  
-            const prevButton = document.getElementById("prev");
-            const nextButton = document.getElementById("next");
+                // Initialize the carousel controls after the HTML content has been generated.  
+                const prevButton = document.getElementById("prev");
+                const nextButton = document.getElementById("next");
 
-            // Add event listeners to the buttons.  
-            prevButton.addEventListener("click", function () {
-                moveSlide(-1);
-                resetCarouselInterval(); // Reset the interval for automatic change after manual control.  
-            });
+                // Add event listeners to the buttons.  
+                prevButton.addEventListener("click", function () {
+                    moveSlide(-1);
+                    resetCarouselInterval(); // Reset the interval for automatic change after manual control.  
+                });
 
-            nextButton.addEventListener("click", function () {
-                moveSlide(1);
-                resetCarouselInterval(); // Reset the interval for automatic change after manual control.  
-            });
-            let slides = document.querySelectorAll('.carousel-images img');
-            if (slides.length > 0) {
-                slides[0].style.opacity = 1;
-                slides[0].classList.add('active');
+                nextButton.addEventListener("click", function () {
+                    moveSlide(1);
+                    resetCarouselInterval(); // Reset the interval for automatic change after manual control.  
+                });
+                let slides = document.querySelectorAll('.carousel-images img');
+                if (slides.length > 0) {
+                    slides[0].style.opacity = 1;
+                    slides[0].classList.add('active');
+                }
+                startCarousel();
             }
-            startCarousel();
-            // alert(1);
-        }
-        else {
-            insightsDiv.innerHTML = '<p>No property data available.</p>';
+            else {
+                insightsDiv.innerHTML = '<p>No property data available.</p>';
+            }
+        } catch {
+            insightsDiv.innerHTML = "<p>No property data available.</p>";
         }
     });
 });
@@ -138,17 +135,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function moveSlide(direction) {
     let slides = document.querySelectorAll('.carousel-images img');
-    let currentSlideIndex = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
+    if (slides.length > 0) {
+        let currentSlideIndex = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
 
-    let nextIndex = (currentSlideIndex + direction + slides.length) % slides.length;
+        let nextIndex = (currentSlideIndex + direction + slides.length) % slides.length;
 
-    // Set the next index as active and manage opacity  
-    slides[currentSlideIndex].classList.remove('active');
-    setTimeout(() => {
-        slides[currentSlideIndex].style.opacity = 0; // Hide the previous slide  
-        slides[nextIndex].classList.add('active');
-        slides[nextIndex].style.opacity = 1; // Show the next slide  
-    }, 1000); // Slightly longer to ensure the active class is toggled after the fade out  
+        // Set the next index as active and manage opacity
+        slides[currentSlideIndex].classList.remove('active');
+        setTimeout(() => {
+            slides[currentSlideIndex].style.opacity = 0; // Hide the previous slide  
+            slides[nextIndex].classList.add('active');
+            slides[nextIndex].style.opacity = 1; // Show the next slide  
+        }, 1000); // Slightly longer to ensure the active class is toggled after the fade out  
+    }
 }
 let intervalID; // Variable to keep track of the setInterval  
 
