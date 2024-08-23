@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 `;
                     tableBody += row;
                 }
-                tableBody  += `</tbody></table>`
+                tableBody += `</tbody></table>`
                 insightsDiv.innerHTML += tableBody;
 
                 // Initialize the carousel controls after the HTML content has been generated.
@@ -137,16 +137,17 @@ function moveSlide(direction) {
     let slides = document.querySelectorAll('.carousel-images img');
     if (slides.length > 0) {
         let currentSlideIndex = Array.from(slides).findIndex(slide => slide.classList.contains('active'));
+        if (currentSlideIndex >= 0) {
+            let nextIndex = (currentSlideIndex + direction + slides.length) % slides.length;
 
-        let nextIndex = (currentSlideIndex + direction + slides.length) % slides.length;
-
-        // Set the next index as active and manage opacity
-        slides[currentSlideIndex].classList.remove('active');
-        setTimeout(() => {
-            slides[currentSlideIndex].style.opacity = 0; // Hide the previous slide
-            slides[nextIndex].classList.add('active');
-            slides[nextIndex].style.opacity = 1; // Show the next slide
-        }, 1000); // Slightly longer to ensure the active class is toggled after the fade out
+            // Set the next index as active and manage opacity
+            slides[currentSlideIndex].classList.remove('active');
+            setTimeout(() => {
+                slides[currentSlideIndex].style.opacity = 0; // Hide the previous slide
+                slides[nextIndex].classList.add('active');
+                slides[nextIndex].style.opacity = 1; // Show the next slide
+            }, 1000); // Slightly longer to ensure the active class is toggled after the fade out
+        }
     }
 }
 let intervalID; // Variable to keep track of the setInterval
