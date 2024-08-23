@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "Unified Real Estate Analyzer",
+    "version": "1.0",
+    "description": "A plugin that combines real estate listings from major platforms, analyzes property conditions, legal issues, and affordability.",
+    "permissions": [
+        "activeTab",
+        "storage",
+        "scripting",
+        "tabs",
+        "webNavigation"
+    ],
+    "background": {
+        "service_worker": "src/background.js"
+    },
+    "action": {
+        "default_popup": "src/popup.html",
+        "default_icon": "assets/icon.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["src/content.js"]
+        }
+    ]
+}

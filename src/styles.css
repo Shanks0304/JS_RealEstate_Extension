@@ -1,0 +1,154 @@
+styles.css CSS for styling the popup interface.body {
+  font-family: Arial, sans-serif;
+  padding: 10px;
+  background-color: #f4f4f4;
+}
+body {
+  width: 400px;
+}
+h1,
+h2,
+h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.property-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+}
+.property-table th,
+.property-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  font-size: 14px;
+}
+.property-table th {
+  background-color: #4caf50;
+  color: white;
+}
+.property-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.property-table tr:hover {
+  background-color: #ddd;
+}
+
+.carousel {
+  position: relative;
+}
+
+.carousel-control {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Offset by half its height to align center */
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 36px; /* Set the width for the control buttons */
+  height: 28.8px; /* Set the height for the control buttons */
+}
+
+.carousel-control.prev {
+  left: 10px; /* Adjust as necessary */
+}
+
+.carousel-control.next {
+  right: 10px; /* Adjust as necessary */
+}
+
+.carousel-control img {
+  width: 100%; /* Make the image fill the button */
+  height: 100%;
+  pointer-events: none; /* Ensures the button, not the image, receives clicks */
+}
+
+.carousel-images {
+  display: flex; /* Aligns images horizontally */
+  transition: transform 1s ease-in-out; /* Smooth transition for the carousel */
+  will-change: transform; /* Optimizes the transition */
+  margin-bottom: 300px;
+}
+
+/* Add this to your CSS file */
+.carousel-images img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 288px;
+  transition: opacity 1s ease; /* Smoother transition for opacity */
+  opacity: 0; /* Make the images invisible initially */
+}
+
+.carousel-images img.active {
+  opacity: 1; /* Make the active image visible */
+}
+
+.history-table {  
+  width: 100%;
+   border-collapse: collapse;  
+  margin: 25px 0;  
+  font-size: 0.95em;  
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
+  min-width: 400px;  
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);  
+  background-color: #ffffff;  
+}  
+
+.history-table thead tr {  
+  background-color: #007BFF; /* A nice shade of blue */  
+  color: #ffffff;  
+  text-align: left;  
+}  
+
+.history-table th,  
+.history-table td {  
+  padding: 12px 15px;
+  font-size: 14px;
+  border: 1px solid #dddddd;  
+  transition: background-color 0.3s ease;  
+}  
+
+.history-table tbody tr {  
+  border-bottom: 1px solid #dddddd;  
+}  
+
+.history-table tbody tr:nth-of-type(even) {  
+  background-color: #f8f9fa;  
+}  
+
+.history-table tbody tr:nth-of-type(odd) {  
+  background-color: #ffffff;  
+}  
+
+.history-table tbody tr:hover {  
+  background-color: #eceff1; /* Light blue color for hover */  
+}  
+
+.history-table tbody tr:last-of-type {  
+  border-bottom: 2px solid #007BFF;  
+}  
+
+.history-table tbody td:first-of-type,  
+.history-table thead th:first-of-type {  
+  border-left: none;  
+}  
+
+.history-table thead th:last-of-type,  
+.history-table tbody td:last-of-type {  
+  border-right: none;  
+}  
+
+/* Active row styles */  
+.history-table tbody tr.active-row {  
+  font-weight: bold;  
+  color: #0056b3; /* A darker blue for active rows */  
+}  
