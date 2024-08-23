@@ -109,12 +109,9 @@ async function waitAndScrapeData() {
         try {
             let cnt = 0;
             propertyDetails.spans = selectAll("#search-detail-lightbox table > tbody > tr > td > span");
-            // alert(propertyDetails.spans.length);
             for (i = 0; i < propertyDetails.spans.length; i++) {
                 span = propertyDetails.spans[i].innerText;
-                // alert(span);
                 if (span[0] >= '0' && span[0] <= '9' && span.includes('/')) {
-                    // alert(span);
                     propertyDetails.h_date[cnt] = span;
                     span = propertyDetails.spans[i + 1].innerText;
                     propertyDetails.h_event[cnt] = span;

@@ -66,15 +66,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     </tbody>
                 </table>
                 <br/>
-                <div id="carousel" class="carousel" style="position: relative;">  
-                    <div class="carousel-images" style="position: relative;">  
-                        ${imageElements}  
-                    </div>  
-                    <button class="carousel-control prev" id="prev" style="position: absolute; top: 144px; left: 10px; transform: translateY(-50%); background: none; border: none; width: 36px; height: 28.8px;">  
-                        <img src="prev.png" alt="Previous" style="width: 100%; height: 100%;">  
-                    </button>  
-                    <button class="carousel-control next" id="next" style="position: absolute; top: 144px; right: 10px; transform: translateY(-50%); background: none; border: none; width: 36px; height: 28.8px;">  
-                        <img src="next.png" alt="Next" style="width: 100%; height: 100%;">  
+                <div id="carousel" class="carousel" style="position: relative;">
+                    <div class="carousel-images" style="position: relative;">
+                        ${imageElements}
+                    </div>
+                    <button class="carousel-control prev" id="prev" style="position: absolute; top: 144px; left: 10px; transform: translateY(-50%); background: none; border: none; width: 36px; height: 28.8px;">
+                        <img src="prev.png" alt="Previous" style="width: 100%; height: 100%;">
+                    </button>
+                    <button class="carousel-control next" id="next" style="position: absolute; top: 144px; right: 10px; transform: translateY(-50%); background: none; border: none; width: 36px; height: 28.8px;">
+                        <img src="next.png" alt="Next" style="width: 100%; height: 100%;">
                     </button>
                 </div>
                 <div width="100%" id="screenshot"></div>
@@ -91,29 +91,29 @@ document.addEventListener('DOMContentLoaded', function () {
                 for (let i = 0; i < propertyDetails.h_date.length; i++) {
                     const row = `
                     <tr>
-                        <td>${propertyDetails.h_date[i]}</td>  
-                        <td>${propertyDetails.h_event[i]}</td>  
-                        <td>${propertyDetails.h_price[i]}</td>  
-                    </tr>  
+                        <td>${propertyDetails.h_date[i]}</td>
+                        <td>${propertyDetails.h_event[i]}</td>
+                        <td>${propertyDetails.h_price[i]}</td>
+                    </tr>
                 `;
                     tableBody += row;
                 }
                 tableBody  += `</tbody></table>`
                 insightsDiv.innerHTML += tableBody;
 
-                // Initialize the carousel controls after the HTML content has been generated.  
+                // Initialize the carousel controls after the HTML content has been generated.
                 const prevButton = document.getElementById("prev");
                 const nextButton = document.getElementById("next");
 
-                // Add event listeners to the buttons.  
+                // Add event listeners to the buttons.
                 prevButton.addEventListener("click", function () {
                     moveSlide(-1);
-                    resetCarouselInterval(); // Reset the interval for automatic change after manual control.  
+                    resetCarouselInterval(); // Reset the interval for automatic change after manual control.
                 });
 
                 nextButton.addEventListener("click", function () {
                     moveSlide(1);
-                    resetCarouselInterval(); // Reset the interval for automatic change after manual control.  
+                    resetCarouselInterval(); // Reset the interval for automatic change after manual control.
                 });
                 let slides = document.querySelectorAll('.carousel-images img');
                 if (slides.length > 0) {
@@ -143,27 +143,27 @@ function moveSlide(direction) {
         // Set the next index as active and manage opacity
         slides[currentSlideIndex].classList.remove('active');
         setTimeout(() => {
-            slides[currentSlideIndex].style.opacity = 0; // Hide the previous slide  
+            slides[currentSlideIndex].style.opacity = 0; // Hide the previous slide
             slides[nextIndex].classList.add('active');
-            slides[nextIndex].style.opacity = 1; // Show the next slide  
-        }, 1000); // Slightly longer to ensure the active class is toggled after the fade out  
+            slides[nextIndex].style.opacity = 1; // Show the next slide
+        }, 1000); // Slightly longer to ensure the active class is toggled after the fade out
     }
 }
-let intervalID; // Variable to keep track of the setInterval  
+let intervalID; // Variable to keep track of the setInterval
 
 function resetCarouselInterval() {
     clearInterval(intervalID);
     intervalID = setInterval(() => {
         moveSlide(1);
-    }, 1500); // Adjust the time to your preferred interval for automatic change.  
+    }, 1500); // Adjust the time to your preferred interval for automatic change.
 }
 
 function startCarousel() {
-    // Only start the carousel if there's more than one slide  
+    // Only start the carousel if there's more than one slide
     const slides = document.querySelectorAll('.carousel-images img');
     if (slides.length > 1) {
         intervalID = setInterval(() => {
             moveSlide(1);
-        }, 1500); // Change every 5 seconds  
+        }, 1500); // Change every 5 seconds
     }
 }  
