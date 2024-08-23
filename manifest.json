@@ -10,6 +10,11 @@
         "tabs",
         "webNavigation"
     ],
+    "host_permissions": [
+        "*://*.zillow.com/*",
+        "*://*.redfin.com/*",
+        "*://*.trulia.com/*"
+    ],
     "background": {
         "service_worker": "src/background.js"
     },

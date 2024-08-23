@@ -7,12 +7,18 @@ chrome.runtime.onInstalled.addListener(() => {
 
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    try{
     // if (changeInfo.status === 'complete') {
+    if(tab.url && tab.url.startsWith('https')){
         chrome.scripting.executeScript({
             target: { tabId: tabId },
             files: ['src/content.js']
         });
+    }
     // }
+    } catch(error) {
+        console.log('Failed to inject script:', error);
+    }
 });
 
 // background.js  

@@ -16,7 +16,7 @@ async function waitAndScrapeData() {
         window.location.hostname.includes('redfin.com') ||
         window.location.hostname.includes('trulia.com')) {
 
-        await delaytime(1);
+        await delaytime(0.3);
         let propertyDetails = {
             images: [],
             views: "",
